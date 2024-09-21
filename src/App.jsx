@@ -11,7 +11,6 @@ function App() {
     {
       id: 1,
       idFunc: 1,
-      nome: 1,
       temp: 50,
       humy: 50,
       status: "Desligada",
@@ -19,7 +18,6 @@ function App() {
     {
       id: 2,
       idFunc: 1,
-      nome: 2,
       temp: 50,
       humy: 50,
       status: "Desligada",
@@ -27,7 +25,6 @@ function App() {
     {
       id: 3,
       idFunc: 1,
-      nome: 3,
       temp: 50,
       humy: 50,
       status: "Desligada",
@@ -35,7 +32,6 @@ function App() {
     {
       id: 4,
       idFunc: 1,
-      nome: 4,
       temp: 50,
       humy: 50,
       status: "Desligada",
@@ -43,7 +39,6 @@ function App() {
     {
       id: 5,
       idFunc: 1,
-      nome: 5,
       temp: 50,
       humy: 50,
       status: "Desligada",
@@ -51,7 +46,6 @@ function App() {
     {
       id: 6,
       idFunc: 1,
-      nome: 6,
       temp: 50,
       humy: 50,
       status: "Desligada",
@@ -60,27 +54,21 @@ function App() {
   const [repair, setRepair] = useState([
     {
       id: 1,
-      nome: 1,
     },
     {
       id: 2,
-      nome: 2,
     },
     {
       id: 3,
-      nome: 3,
     },
     {
       id: 4,
-      nome: 4,
     },
     {
       id: 5,
-      nome: 5,
     },
     {
       id: 6,
-      nome: 6,
     },
   ]);
   const [alert, setAlert] = useState([
@@ -91,19 +79,16 @@ function App() {
     },
   ]);
 
-  function onMachineAdd(nome, func) {
-    const id = v4();
+  function onMachineAdd(id, func) {
     const newMachine = {
       id: id,
       idFunc: func,
-      nome: nome,
       temp: 50,
       humy: 50,
       status: "Desligada",
     };
     const newButton = {
       id: id,
-      nome: nome,
     };
     setMachines([...machines, newMachine]);
     setRepair([...repair, newButton]);
@@ -225,7 +210,7 @@ function App() {
         <p className="text-white font-bold text-3xl">Gerenciador de Maquinas</p>
       </header>
       <div className="w-full flex justify-center mt-4">
-        <AddMachine onMachineAdd={onMachineAdd} />
+        <AddMachine machines={machines} onMachineAdd={onMachineAdd} />
       </div>
       <div className="w-full justify-center flex items-center flex-col space-y-8 mt-6">
         <div className="w-[40%] flex flex-wrap gap-8 justify-center">

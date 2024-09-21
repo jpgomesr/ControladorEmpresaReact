@@ -10,7 +10,7 @@ function Machine({ machines, onDeleteMachine }) {
             className="w-[10rem] flex flex-col justify-center items-center h-[10rem] border-[1px] border-gray-300 shadow-lg"
           >
             <div className="h-full flex items center flex-col justify-center text-center gap-2">
-              <p>Maquina {machine.nome}</p>
+              <p>Maquina {machine.id}</p>
               <p>{machine.status}</p>
             </div>
             <div className="flex justify-end items-end pb-2 gap-4">

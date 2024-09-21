@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-function AddMachine({ onMachineAdd }) {
+function AddMachine({ onMachineAdd, machines }) {
   const [func, setFunc] = useState("");
-  const [nome, setNome] = useState("");
+  const [id, setId] = useState("");
 
   return (
     <>
@@ -11,8 +11,8 @@ function AddMachine({ onMachineAdd }) {
         <div className="flex flex-row gap-4">
           <input
             className="px-2 rounded-lg w-24"
-            value={nome}
-            onChange={(event) => setNome(event.target.value)}
+            value={id}
+            onChange={(event) => setId(event.target.value)}
             type="number"
             placeholder="Id Maquina"
           />
@@ -25,11 +25,15 @@ function AddMachine({ onMachineAdd }) {
           />
           <button
             onClick={() => {
-              if (!func.trim() || !nome.trim()) {
+              if (!func.trim() || !id.trim()) {
                 return alert("Preencha o id da maquina e do funcionário!");
               }
-              onMachineAdd(nome, func);
-              setNome("");
+              const exists = machines.some((machine) => machine.id == id);
+              if (exists) {
+                return alert(`Maquina com id ${id} já existente!`);
+              }
+              onMachineAdd(id, func);
+              setId("");
               setFunc("");
             }}
             className="bg-blue-800 text-white font-semibold px-3 py-1 rounded-lg"
