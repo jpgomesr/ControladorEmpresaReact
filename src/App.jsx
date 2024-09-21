@@ -3,7 +3,6 @@ import "./App.css";
 import Machine from "./components/Machine";
 import RepairButton from "./components/RepairButton";
 import Alerts from "./components/Alerts";
-import { v4 } from "uuid";
 import AddMachine from "./components/AddMachine";
 
 function App() {
