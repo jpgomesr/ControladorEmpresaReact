@@ -14,7 +14,7 @@ function Machine({ machines, onDeleteMachine }) {
               <p>{machine.status}</p>
             </div>
             <div className="flex justify-end items-end pb-2 gap-4">
-              <button className="flex">
+              <button className="flex btn">
                 <ChevronDown />
               </button>
               <button className="flex">

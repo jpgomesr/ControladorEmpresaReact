@@ -144,9 +144,9 @@ function App() {
           );
 
           let newStatus = machine.status;
-          if (newTemp > 20) {
+          if (newTemp > 80) {
             newStatus = "Danificada";
-          } else if (newTemp > 10) {
+          } else if (newTemp > 70) {
             newStatus = "Atenção";
           }
 
