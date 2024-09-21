@@ -26,7 +26,7 @@ function AddMachine({ onMachineAdd }) {
           <button
             onClick={() => {
               if (!func.trim() || !nome.trim()) {
-                return alert("Preencha o nome da maquina e id do funcionário!");
+                return alert("Preencha o id da maquina e do funcionário!");
               }
               onMachineAdd(nome, func);
               setNome("");
