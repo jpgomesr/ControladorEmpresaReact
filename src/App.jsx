@@ -107,7 +107,10 @@ function App() {
   function generateRandomTempAndHumy(machineId) {
     setMachines((prevMachines) =>
       prevMachines.map((machine) => {
-        if (machine.id === machineId && machine.status === "Ligada" || machine.status === "Atenção") {
+        if (
+          (machine.id === machineId && machine.status === "Ligada") ||
+          machine.status === "Atenção"
+        ) {
           const variation = 10;
 
           const newTemp = Math.max(
@@ -235,7 +238,11 @@ function App() {
           />
         </div>
       </div>
-      <div datatype="modal" id="modal" className="hidden">
+      <div
+        datatype="modal"
+        id="modal"
+        className="hidden fixed top-[50%] left-[50%]"
+      >
         <Info
           machines={machines}
           machineId={selectedMachineId}
