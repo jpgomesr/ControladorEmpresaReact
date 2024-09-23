@@ -6,9 +6,11 @@ import Alerts from "./components/Alerts";
 import AddMachine from "./components/AddMachine";
 import Info from "./components/Info";
 import { v4 } from "uuid";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { ChevronLeftIcon } from "lucide-react";
 
 function App() {
+  const navigate = useNavigate();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const idFunc = parseInt(query.get("idfunc"), 10);
@@ -16,42 +18,42 @@ function App() {
   const [machines, setMachines] = useState([
     {
       id: 1,
-      idFunc: 2,
+      idFunc: 1,
       temp: 50,
       humy: 50,
       status: "Desligada",
     },
     {
       id: 2,
-      idFunc: 1,
+      idFunc: 2,
       temp: 50,
       humy: 50,
       status: "Desligada",
     },
     {
       id: 3,
-      idFunc: 1,
+      idFunc: 3,
       temp: 50,
       humy: 50,
       status: "Desligada",
     },
     {
       id: 4,
-      idFunc: 1,
+      idFunc: 4,
       temp: 50,
       humy: 50,
       status: "Desligada",
     },
     {
       id: 5,
-      idFunc: 1,
+      idFunc: 5,
       temp: 50,
       humy: 50,
       status: "Desligada",
     },
     {
       id: 6,
-      idFunc: 1,
+      idFunc: 6,
       temp: 50,
       humy: 50,
       status: "Desligada",
@@ -60,21 +62,27 @@ function App() {
   const [repair, setRepair] = useState([
     {
       id: 1,
+      idFunc: 1,
     },
     {
       id: 2,
+      idFunc: 2,
     },
     {
       id: 3,
+      idFunc: 3,
     },
     {
       id: 4,
+      idFunc: 4,
     },
     {
       id: 5,
+      idFunc: 5,
     },
     {
       id: 6,
+      idFunc: 6,
     },
   ]);
   const [alert, setAlert] = useState([]);
@@ -84,13 +92,14 @@ function App() {
   function onMachineAdd(id, func) {
     const newMachine = {
       id: id,
-      idFunc: func,
+      idFunc: parseInt(func),
       temp: 50,
       humy: 50,
       status: "Desligada",
     };
     const newButton = {
       id: id,
+      idFunc: func,
     };
     setMachines([...machines, newMachine]);
     setRepair([...repair, newButton]);
@@ -157,10 +166,9 @@ function App() {
 
   function turnOnMachine() {
     setMachines((prevMachines) =>
-      prevMachines.map((machine) => ({
-        ...machine,
-        status: "Ligada",
-      }))
+      prevMachines.map((machine) =>
+        machine.idFunc === idFunc ? { ...machine, status: "Ligada" } : machine
+      )
     );
   }
 
@@ -223,7 +231,7 @@ function App() {
     elemento.style.display = "flex";
   }
 
-  function closeModal(machineId) {
+  function closeModal() {
     const elemento = document.getElementById("modal");
     elemento.style.display = "none";
   }
@@ -243,11 +251,22 @@ function App() {
 
   return (
     <>
-      <header className="bg-gray-600 flex items-center justify-center py-6">
-        <p className="text-white font-bold text-3xl">Gerenciador de Maquinas</p>
+      <header className="bg-gray-600 flex items-center justify-between py-6 px-8">
+        <button className="text-white">
+          <ChevronLeftIcon onClick={() => navigate(-1)} />
+        </button>
+        <div className="w-full flex justify-center">
+          <p className="text-white font-bold text-3xl">
+            Gerenciador de Maquinas
+          </p>
+        </div>
       </header>
       <div className="w-full flex justify-center mt-4">
-        <AddMachine machines={machines} onMachineAdd={onMachineAdd} />
+        <AddMachine
+          machines={machines}
+          onMachineAdd={onMachineAdd}
+          idFunc={idFunc}
+        />
       </div>
       <div className="w-full justify-center flex items-center flex-col space-y-8 mt-6">
         <div className="w-[40%] flex flex-wrap gap-8 justify-center">
@@ -292,7 +311,11 @@ function App() {
         </div>
         <div className="w-[40%] flex flex-col justify-center">
           <div className="flex flex-wrap justify-center items-center gap-6">
-            <RepairButton repair={repair} repairMachine={repairMachine} />
+            <RepairButton
+              repair={repair}
+              repairMachine={repairMachine}
+              funcionario={idFunc}
+            />
           </div>
         </div>
       </div>
