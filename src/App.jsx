@@ -166,9 +166,14 @@ function App() {
 
   function turnOnMachine() {
     setMachines((prevMachines) =>
-      prevMachines.map((machine) =>
-        machine.idFunc === idFunc ? { ...machine, status: "Ligada" } : machine
-      )
+      prevMachines.map((machine) => {
+        if (idFunc === 1) {
+          return { ...machine, status: "Ligada" };
+        }
+        return machine.idFunc === idFunc
+          ? { ...machine, status: "Ligada" }
+          : machine;
+      })
     );
   }
 
