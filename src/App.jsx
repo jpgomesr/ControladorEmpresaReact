@@ -107,7 +107,7 @@ function App() {
   function generateRandomTempAndHumy(machineId) {
     setMachines((prevMachines) =>
       prevMachines.map((machine) => {
-        if (machine.id === machineId && machine.status === "Ligada") {
+        if (machine.id === machineId && machine.status === "Ligada" || machine.status === "Atenção") {
           const variation = 10;
 
           const newTemp = Math.max(
