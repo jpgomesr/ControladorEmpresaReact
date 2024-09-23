@@ -1,6 +1,6 @@
 import { ChevronDown, TrashIcon } from "lucide-react";
 
-function Machine({ machines, onDeleteMachine }) {
+function Machine({ machines, onDeleteMachine, openModal }) {
   return (
     <>
       {machines &&
@@ -15,7 +15,7 @@ function Machine({ machines, onDeleteMachine }) {
             </div>
             <div className="flex justify-end items-end pb-2 gap-4">
               <button className="flex btn">
-                <ChevronDown />
+                <ChevronDown onClick={() => openModal(machine.id)} />
               </button>
               <button className="flex">
                 <TrashIcon onClick={() => onDeleteMachine(machine.id)} />

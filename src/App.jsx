@@ -4,6 +4,7 @@ import Machine from "./components/Machine";
 import RepairButton from "./components/RepairButton";
 import Alerts from "./components/Alerts";
 import AddMachine from "./components/AddMachine";
+import Info from "./components/Info";
 
 function App() {
   const [machines, setMachines] = useState([
@@ -77,6 +78,7 @@ function App() {
       description: "teste",
     },
   ]);
+  const [selectedMachineId, setSelectedMachineId] = useState(null);
 
   function onMachineAdd(id, func) {
     const newMachine = {
@@ -128,9 +130,9 @@ function App() {
           );
 
           let newStatus = machine.status;
-          if (newTemp > 80) {
+          if (newTemp > 80 || newHumy > 90) {
             newStatus = "Danificada";
-          } else if (newTemp > 70) {
+          } else if (newTemp > 70 || newHumy > 70) {
             newStatus = "Atenção";
           }
 
@@ -203,6 +205,17 @@ function App() {
     };
   }, [machines]);
 
+  function openModal(machineId) {
+    setSelectedMachineId(machineId);
+    const elemento = document.getElementById("modal");
+    elemento.style.display = "flex";
+  }
+
+  function closeModal(machineId) {
+    const elemento = document.getElementById("modal");
+    elemento.style.display = "none";
+  }
+
   return (
     <>
       <header className="bg-gray-600 flex items-center justify-center py-6">
@@ -218,8 +231,16 @@ function App() {
             onDeleteMachine={onDeleteMachine}
             turnOnMachine={turnOnMachine}
             turnOffMachine={turnOffMachine}
+            openModal={openModal}
           />
         </div>
+      </div>
+      <div datatype="modal" id="modal" className="hidden">
+        <Info
+          machines={machines}
+          machineId={selectedMachineId}
+          closeModal={closeModal}
+        />
       </div>
       <div className="w-full justify-center flex items-center flex-col space-y-8 mt-6">
         <div className="space-x-4">
