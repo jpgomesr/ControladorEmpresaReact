@@ -5,12 +5,18 @@ import RepairButton from "./components/RepairButton";
 import Alerts from "./components/Alerts";
 import AddMachine from "./components/AddMachine";
 import Info from "./components/Info";
+import { v4 } from "uuid";
+import { useLocation } from "react-router-dom";
 
 function App() {
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const idFunc = parseInt(query.get("idfunc"), 10);
+
   const [machines, setMachines] = useState([
     {
       id: 1,
-      idFunc: 1,
+      idFunc: 2,
       temp: 50,
       humy: 50,
       status: "Desligada",
@@ -71,14 +77,9 @@ function App() {
       id: 6,
     },
   ]);
-  const [alert, setAlert] = useState([
-    {
-      id: 1,
-      title: "Teste",
-      description: "teste",
-    },
-  ]);
+  const [alert, setAlert] = useState([]);
   const [selectedMachineId, setSelectedMachineId] = useState(null);
+  const [alertedMachines, setAlertedMachines] = useState(new Set());
 
   function onMachineAdd(id, func) {
     const newMachine = {
@@ -112,7 +113,6 @@ function App() {
           machine.status === "Atenção"
         ) {
           const variation = 10;
-
           const newTemp = Math.max(
             0,
             Math.min(
@@ -133,10 +133,14 @@ function App() {
           );
 
           let newStatus = machine.status;
-          if (newTemp > 80 || newHumy > 90) {
+          if (newTemp > 90 || newHumy > 90) {
             newStatus = "Danificada";
+            alertSender(`Máquina ${machine.id}`, "Teste", machine.id);
           } else if (newTemp > 70 || newHumy > 70) {
             newStatus = "Atenção";
+            alertSender(`Máquina ${machine.id}`, "Teste", machine.id);
+          } else {
+            newStatus = "Ligada";
           }
 
           return {
@@ -175,6 +179,11 @@ function App() {
     setMachines((prevMachines) =>
       prevMachines.map((machine) => {
         if (machine.id === machineId && machine.status === "Danificada") {
+          setAlertedMachines((prev) => {
+            const newSet = new Set(prev);
+            newSet.delete(machineId);
+            return newSet;
+          });
           return {
             ...machine,
             status: "Ligada",
@@ -219,6 +228,19 @@ function App() {
     elemento.style.display = "none";
   }
 
+  function alertSender(title, description, machineId) {
+    if (!alertedMachines.has(machineId)) {
+      const newAlert = { id: v4(), title, description };
+      setAlert((prevAlerts) => {
+        if (prevAlerts.length >= 10) {
+          return [...prevAlerts.slice(1), newAlert];
+        }
+        return [...prevAlerts, newAlert];
+      });
+      setAlertedMachines((prev) => new Set(prev).add(machineId));
+    }
+  }
+
   return (
     <>
       <header className="bg-gray-600 flex items-center justify-center py-6">
@@ -235,6 +257,7 @@ function App() {
             turnOnMachine={turnOnMachine}
             turnOffMachine={turnOffMachine}
             openModal={openModal}
+            funcionario={idFunc}
           />
         </div>
       </div>
@@ -274,7 +297,7 @@ function App() {
         </div>
       </div>
       <footer className="flex flex-row w-full py-6 justify-center items-center">
-        <div className="flex flex-col w-[50%] py-3 px-1 space-y-2">
+        <div className="flex flex-col w-[50%] py-3 px-1">
           <Alerts alert={alert} />
         </div>
       </footer>

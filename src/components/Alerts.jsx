@@ -3,7 +3,7 @@ import { ChevronRight } from "lucide-react";
 function Alerts({ alert }) {
   return (
     <>
-      <ul>
+      <ul className="space-y-4">
         {alert &&
           alert.map((alerts) => (
             <li key={alert.id} className="flex items-center space-x-6">
