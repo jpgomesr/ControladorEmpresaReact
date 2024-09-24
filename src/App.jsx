@@ -15,76 +15,39 @@ function App() {
   const query = new URLSearchParams(location.search);
   const idFunc = parseInt(query.get("idfunc"), 10);
 
-  const [machines, setMachines] = useState([
-    {
-      id: 1,
-      idFunc: 1,
-      temp: 50,
-      humy: 50,
-      status: "Desligada",
-    },
-    {
-      id: 2,
-      idFunc: 2,
-      temp: 50,
-      humy: 50,
-      status: "Desligada",
-    },
-    {
-      id: 3,
-      idFunc: 3,
-      temp: 50,
-      humy: 50,
-      status: "Desligada",
-    },
-    {
-      id: 4,
-      idFunc: 4,
-      temp: 50,
-      humy: 50,
-      status: "Desligada",
-    },
-    {
-      id: 5,
-      idFunc: 5,
-      temp: 50,
-      humy: 50,
-      status: "Desligada",
-    },
-    {
-      id: 6,
-      idFunc: 6,
-      temp: 50,
-      humy: 50,
-      status: "Desligada",
-    },
-  ]);
-  const [repair, setRepair] = useState([
-    {
-      id: 1,
-      idFunc: 1,
-    },
-    {
-      id: 2,
-      idFunc: 2,
-    },
-    {
-      id: 3,
-      idFunc: 3,
-    },
-    {
-      id: 4,
-      idFunc: 4,
-    },
-    {
-      id: 5,
-      idFunc: 5,
-    },
-    {
-      id: 6,
-      idFunc: 6,
-    },
-  ]);
+  const [machines, setMachines] = useState(
+    JSON.parse(localStorage.getItem("machines"))
+  );
+  const [repair, setRepair] = useState(
+    JSON.parse(localStorage.getItem("machines"))
+  );
+
+  useEffect(() => {
+    localStorage.setItem("machines", JSON.stringify(machines));
+  }, [machines]);
+
+  useEffect(() => {
+    localStorage.setItem("repair", JSON.stringify(repair));
+  }, [repair]);
+
+  useEffect(() => {
+    async function fetchTasks() {
+      const response = await fetch(localStorage());
+      const data = await response.json();
+      setMachines(data);
+    }
+    fetchTasks();
+  }, []);
+
+  useEffect(() => {
+    async function fetchTasks() {
+      const response = await fetch(localStorage());
+      const data = await response.json();
+      setRepair(data);
+    }
+    fetchTasks();
+  }, []);
+
   const [alert, setAlert] = useState([]);
   const [selectedMachineId, setSelectedMachineId] = useState(null);
   const [alertedMachines, setAlertedMachines] = useState(new Set());
