@@ -11,7 +11,7 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/idfunc",
+    path: "/machine",
     element: <App />,
   },
 ]);

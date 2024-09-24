@@ -6,7 +6,7 @@ function Login() {
   const [idFuncionario, setIdFuncionario] = useState("");
 
   function onSeeDetailsClick() {
-    navigate(`/idfunc?idfunc=${idFuncionario}`);
+    navigate(`/machine?idfunc=${idFuncionario}`);
   }
 
   return (
