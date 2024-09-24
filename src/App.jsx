@@ -33,6 +33,28 @@ function App() {
     localStorage.setItem("repair", JSON.stringify(repair));
   }, [repair]);
 
+  useEffect(() => {
+    const storedMachines = localStorage.getItem("machines");
+    if (storedMachines) {
+      setMachines(JSON.parse(storedMachines));
+    } else {
+      setMachines([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    async function fetchTasks() {
+      const storedData = localStorage.getItem("repair");
+      if (storedData) {
+        const data = JSON.parse(storedData);
+        setRepair(data);
+      } else {
+        setRepair([]);
+      }
+    }
+    fetchTasks();
+  }, []);
+
   const [alert, setAlert] = useState([]);
   const [selectedMachineId, setSelectedMachineId] = useState(null);
   const [alertedMachines, setAlertedMachines] = useState(new Set());
@@ -54,8 +76,12 @@ function App() {
   }
 
   function onDeleteMachine(machineId) {
-    setMachines((prev) => prev.filter((machine) => machine.id !== machineId));
-    setRepair((prev) => prev.filter((repairB) => repairB.id !== machineId));
+    if (machines && machines.some((machine) => machine.id === machineId)) {
+      setMachines((prev) => prev.filter((machine) => machine.id !== machineId));
+    }
+    if (repair && repair.some((repairB) => repairB.id === machineId)) {
+      setRepair((prev) => prev.filter((repairB) => repairB.id !== machineId));
+    }
   }
 
   function generateRandomTempAndHumy(machineId) {
@@ -110,9 +136,11 @@ function App() {
 
   function turnOnMachine() {
     setMachines((prevMachines) =>
-      prevMachines.map((machine) =>
-        machine.idFunc === idFunc ? { ...machine, status: "Ligada" } : machine
-      )
+      prevMachines.map((machine) => {
+        return machine.idFunc === idFunc
+          ? { ...machine, status: "Ligada" }
+          : machine;
+      })
     );
   }
 
@@ -149,6 +177,7 @@ function App() {
   }
 
   useEffect(() => {
+    console.log(machines);
     const intervalIds = machines
       .map((machine) => {
         if (machine.status === "Ligada" || machine.status === "Atenção") {
