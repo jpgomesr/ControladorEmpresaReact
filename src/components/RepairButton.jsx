@@ -5,7 +5,7 @@ function RepairButton({ repair, repairMachine, funcionario }) {
         repair
           .filter(
             (repairB) =>
-              funcionario == "1" || repairB.idFunc === parseInt(funcionario, 10)
+              funcionario == "1" || repairB.idFunc == parseInt(funcionario, 10)
           )
           .map((repairB) => (
             <button
