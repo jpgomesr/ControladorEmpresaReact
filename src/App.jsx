@@ -15,12 +15,15 @@ function App() {
   const query = new URLSearchParams(location.search);
   const idFunc = parseInt(query.get("idfunc"), 10);
 
-  const [machines, setMachines] = useState(
-    JSON.parse(localStorage.getItem("machines"))
-  );
-  const [repair, setRepair] = useState(
-    JSON.parse(localStorage.getItem("machines"))
-  );
+  const [machines, setMachines] = useState(() => {
+    const storedMachines = localStorage.getItem("machines");
+    return storedMachines ? JSON.parse(storedMachines) : [];
+  });
+
+  const [repair, setRepair] = useState(() => {
+    const storedRepair = localStorage.getItem("repair");
+    return storedRepair ? JSON.parse(storedRepair) : [];
+  });
 
   useEffect(() => {
     localStorage.setItem("machines", JSON.stringify(machines));
@@ -29,28 +32,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem("repair", JSON.stringify(repair));
   }, [repair]);
-
-  useEffect(() => {
-    const storedMachines = localStorage.getItem("machines");
-    if (storedMachines) {
-      setMachines(JSON.parse(storedMachines));
-    } else {
-      setMachines([]);
-    }
-  }, []);
-
-  useEffect(() => {
-    async function fetchTasks() {
-      const storedData = localStorage.getItem("repair");
-      if (storedData) {
-        const data = JSON.parse(storedData);
-        setRepair(data);
-      } else {
-        setRepair([]);
-      }
-    }
-    fetchTasks();
-  }, []);
 
   const [alert, setAlert] = useState([]);
   const [selectedMachineId, setSelectedMachineId] = useState(null);
@@ -68,17 +49,13 @@ function App() {
       id: id,
       idFunc: func,
     };
-    setMachines([...machines, newMachine]);
-    setRepair([...repair, newButton]);
+    setMachines((prev) => [...prev, newMachine]);
+    setRepair((prev) => [...prev, newButton]);
   }
 
   function onDeleteMachine(machineId) {
-    if (machines.some((machine) => machine.id === machineId)) {
-      setMachines(machines.filter((machine) => machine.id !== machineId));
-    }
-    if (repair.some((repairB) => repairB.id === machineId)) {
-      setRepair(repair.filter((repairB) => repairB.id !== machineId));
-    }
+    setMachines((prev) => prev.filter((machine) => machine.id !== machineId));
+    setRepair((prev) => prev.filter((repairB) => repairB.id !== machineId));
   }
 
   function generateRandomTempAndHumy(machineId) {
@@ -133,14 +110,9 @@ function App() {
 
   function turnOnMachine() {
     setMachines((prevMachines) =>
-      prevMachines.map((machine) => {
-        if (idFunc === 1) {
-          return { ...machine, status: "Ligada" };
-        }
-        return machine.idFunc === idFunc
-          ? { ...machine, status: "Ligada" }
-          : machine;
-      })
+      prevMachines.map((machine) =>
+        machine.idFunc === idFunc ? { ...machine, status: "Ligada" } : machine
+      )
     );
   }
 
@@ -177,7 +149,6 @@ function App() {
   }
 
   useEffect(() => {
-    console.log(machines);
     const intervalIds = machines
       .map((machine) => {
         if (machine.status === "Ligada" || machine.status === "Atenção") {
