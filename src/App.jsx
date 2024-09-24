@@ -31,19 +31,23 @@ function App() {
   }, [repair]);
 
   useEffect(() => {
-    async function fetchTasks() {
-      const response = await fetch(localStorage());
-      const data = await response.json();
-      setMachines(data);
+    const storedMachines = localStorage.getItem("machines");
+    if (storedMachines) {
+      setMachines(JSON.parse(storedMachines));
+    } else {
+      setMachines([]);
     }
-    fetchTasks();
   }, []);
 
   useEffect(() => {
     async function fetchTasks() {
-      const response = await fetch(localStorage());
-      const data = await response.json();
-      setRepair(data);
+      const storedData = localStorage.getItem("repair");
+      if (storedData) {
+        const data = JSON.parse(storedData);
+        setRepair(data);
+      } else {
+        setRepair([]);
+      }
     }
     fetchTasks();
   }, []);
