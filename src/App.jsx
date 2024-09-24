@@ -137,7 +137,7 @@ function App() {
   function turnOnMachine() {
     setMachines((prevMachines) =>
       prevMachines.map((machine) => {
-        return machine.idFunc === idFunc
+        return machine.idFunc === idFunc || idFunc == 1
           ? { ...machine, status: "Ligada" }
           : machine;
       })
@@ -293,7 +293,7 @@ function App() {
       </div>
       <footer className="flex flex-row w-full py-6 justify-center items-center">
         <div className="flex flex-col w-[50%] py-3 px-1">
-          <Alerts alert={alert} />
+          <Alerts alert={alert} machines={machines} funcionario={idFunc} />
         </div>
       </footer>
     </>
