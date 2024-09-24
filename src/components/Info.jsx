@@ -28,6 +28,9 @@ function Info({ machines, machineId, closeModal }) {
                 <p className="text-[1.2rem] font-semibold">
                   Umidade: {machine.humy}
                 </p>
+                <p className="text-[1.2rem] font-semibold">
+                  Id funcionário responsável: {machine.idFunc}
+                </p>
               </>
             ) : (
               <p>Máquina não encontrada.</p>

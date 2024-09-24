@@ -71,8 +71,16 @@ function App() {
       id: id,
       idFunc: func,
     };
-    setMachines((prev) => [...prev, newMachine]);
-    setRepair((prev) => [...prev, newButton]);
+
+    setMachines((prev) => {
+      const updatedMachines = [...prev, newMachine];
+      return updatedMachines.sort((a, b) => a.id - b.id);
+    });
+
+    setRepair((prev) => {
+      const updatedRepairs = [...prev, newButton];
+      return updatedRepairs.sort((a, b) => a.id - b.id);
+    });
   }
 
   function onDeleteMachine(machineId) {
@@ -114,10 +122,18 @@ function App() {
           let newStatus = machine.status;
           if (newTemp > 90 || newHumy > 90) {
             newStatus = "Danificada";
-            alertSender(`Máquina ${machine.id}`, "Teste", machine.id);
+            alertSender(
+              `Máquina ${machine.id}`,
+              "Máquina danificada!",
+              machine.id
+            );
           } else if (newTemp > 70 || newHumy > 70) {
             newStatus = "Atenção";
-            alertSender(`Máquina ${machine.id}`, "Teste", machine.id);
+            alertSender(
+              `Máquina ${machine.id}`,
+              "Atenção necessária!",
+              machine.id
+            );
           } else {
             newStatus = "Ligada";
           }
@@ -209,8 +225,9 @@ function App() {
   }
 
   function alertSender(title, description, machineId) {
+    console.log("Alert sent for machine:", machineId);
     if (!alertedMachines.has(machineId)) {
-      const newAlert = { id: v4(), title, description };
+      const newAlert = { id: v4(), title, description, machineId };
       setAlert((prevAlerts) => {
         if (prevAlerts.length >= 10) {
           return [...prevAlerts.slice(1), newAlert];

@@ -8,8 +8,9 @@ function Alerts({ alert, machines, funcionario }) {
               const machine = machines.find(
                 (machine) => machine.id === alertItem.machineId
               );
+              console.log("Filtered Machine: ", machine);
               return (
-                machine && (machine.idFunc === funcionario || funcionario === 1)
+                machine && (machine.idFunc == funcionario || funcionario == 1)
               );
             })
             .map((alertItem) => {
