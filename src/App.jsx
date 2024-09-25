@@ -90,6 +90,7 @@ function App() {
     if (repair && repair.some((repairB) => repairB.id === machineId)) {
       setRepair((prev) => prev.filter((repairB) => repairB.id !== machineId));
     }
+    setAlert((prev) => prev.filter((alert) => alert.machineId !== machineId));
   }
 
   function generateRandomTempAndHumy(machineId) {

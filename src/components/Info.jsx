@@ -9,7 +9,7 @@ function Info({ machines, machineId, closeModal }) {
       <div className="w-[36rem] h-[36rem] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 placeholder-opacity-100">
         <div className="flex flex-col space-y-16 items-center pt-6 text-white opacity-100">
           <div className="w-full px-8 flex justify-between items-center font-bold text-[2rem]">
-            <button className="flex justify-center items-center cursor-pointer">
+            <button className="flex justify-center items-center cursor-pointer hover:transition-transform hover:scale-125 hover:bg-gray-700 rounded-full">
               <CircleX onClick={closeModal} />
             </button>
             <div className="flex justify-center w-full">
