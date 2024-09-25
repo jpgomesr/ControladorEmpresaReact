@@ -23,10 +23,10 @@ function Info({ machines, machineId, closeModal }) {
                   Status: {machine.status}
                 </p>
                 <p className="text-[1.2rem] font-semibold">
-                  Temperatura: {machine.temp}
+                  Temperatura: {machine.temp}°C
                 </p>
                 <p className="text-[1.2rem] font-semibold">
-                  Umidade: {machine.humy}
+                  Umidade: {machine.humy}%
                 </p>
                 <p className="text-[1.2rem] font-semibold">
                   Id funcionário responsável: {machine.idFunc}
