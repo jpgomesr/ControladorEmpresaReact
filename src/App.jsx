@@ -289,10 +289,7 @@ function App() {
             Iniciar Maquinas
           </button>
           <button
-            onClick={(event) => {
-              event.preventDefault();
-              turnOffMachine();
-            }}
+            onClick={turnOffMachine}
             className="bg-red-500 px-2 py-1 font-bold rounded-lg hover:transition-transform hover:scale-110 shadow-lg"
           >
             Desligar Maquinas
