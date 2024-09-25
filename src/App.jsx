@@ -239,6 +239,11 @@ function App() {
     }
   }
 
+  function clearAlerts() {
+    setAlert([]);
+    setAlertedMachines(new Set());
+  }
+
   return (
     <>
       <header className="bg-gray-600 flex items-center justify-between py-6 px-8">
@@ -282,20 +287,22 @@ function App() {
         />
       </div>
       <div className="w-full justify-center flex items-center flex-col space-y-8 mt-6">
-        <div className="space-x-4">
-          <button
-            onClick={turnOnMachine}
-            className="bg-green-500 px-2 py-1 font-bold rounded-lg hover:transition-transform hover:scale-110 shadow-lg"
-          >
-            Iniciar Maquinas
-          </button>
-          <button
-            onClick={turnOffMachine}
-            className="bg-red-500 px-2 py-1 font-bold rounded-lg hover:transition-transform hover:scale-110 shadow-lg"
-          >
-            Desligar Maquinas
-          </button>
-        </div>
+        {machines.length > 0 && (
+          <div className="space-x-4">
+            <button
+              onClick={turnOnMachine}
+              className="bg-green-500 px-2 py-1 font-bold rounded-lg hover:transition-transform hover:scale-110 shadow-lg"
+            >
+              Iniciar Maquinas
+            </button>
+            <button
+              onClick={turnOffMachine}
+              className="bg-red-500 px-2 py-1 font-bold rounded-lg hover:transition-transform hover:scale-110 shadow-lg"
+            >
+              Desligar Maquinas
+            </button>
+          </div>
+        )}
         <div className="w-[40%] flex flex-col justify-center">
           <div className="flex flex-wrap justify-center items-center gap-6">
             <RepairButton
@@ -305,6 +312,16 @@ function App() {
             />
           </div>
         </div>
+        {alert.length > 0 && (
+          <div className="w-[40%] flex flex-col items-center">
+            <button
+              onClick={clearAlerts}
+              className="bg-red-700 text-white font-bold py-2 px-4 rounded-xl text-[1.1rem]"
+            >
+              Limpar Alertas
+            </button>
+          </div>
+        )}
       </div>
       <footer className="flex flex-row w-full py-6 justify-center items-center">
         <div className="flex flex-col w-[50%] py-3 px-1">
