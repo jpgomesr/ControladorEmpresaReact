@@ -11,7 +11,12 @@ function Login() {
       setError("Id funcionário está vazio!");
       return;
     }
-    navigate(`/machine?idfunc=${idFuncionario}`);
+    const idNum = Number(idFuncionario);
+    if (idNum <= 0 || isNaN(idNum)) {
+      setError("Id inválido!");
+      return;
+    }
+    navigate(`/machine?idfunc=${idNum}`);
   }
 
   return (
