@@ -159,22 +159,28 @@ function App() {
 
   function turnOnMachine() {
     setMachines((prevMachines) =>
-      prevMachines.map((machine) => {
-        return machine.idFunc === idFunc || idFunc == 1
-          ? { ...machine, status: "Ligada" }
-          : machine;
-      })
+      prevMachines.map((machine) => (machine.status == "Danificada" ? {
+        ...machine
+      } : {
+        ...machine, status: "Ligada"
+      }))
     );
   }
 
   function turnOffMachine() {
     setMachines((prevMachines) =>
-      prevMachines.map((machine) => ({
-        ...machine,
-        status: "Desligada",
-        temp: 50,
-        humy: 50,
-      }))
+      prevMachines.map((machine) =>
+        machine.status == "Ligada" || machine.status == "Atenção"
+          ? {
+              ...machine,
+              status: "Desligada",
+              temp: 50,
+              humy: 50,
+            }
+          : {
+              ...machine,
+            }
+      )
     );
   }
 
