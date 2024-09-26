@@ -176,6 +176,9 @@ function App() {
     setMachines((prevMachines) =>
       prevMachines.map((machine) => {
         if (machine.id === machineId && machine.status === "Danificada") {
+          setAlert((prevAlerts) =>
+            prevAlerts.filter((alert) => alert.machineId !== machineId)
+          );
           setAlertedMachines((prev) => {
             const newSet = new Set(prev);
             newSet.delete(machineId);
