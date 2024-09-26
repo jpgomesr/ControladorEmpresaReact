@@ -9,6 +9,10 @@ function AddMachine({ onMachineAdd, machines, idFunc }) {
       return alert("Preencha o id da máquina e do funcionário!");
     }
 
+    if (func <= 0 || id <= 0) {
+      return alert("Valores inválidos!");
+    }
+
     const exists = machines.some((machine) => machine.id === parseInt(id, 10));
     if (exists) {
       return alert(`Máquina com id ${id} já existente!`);
