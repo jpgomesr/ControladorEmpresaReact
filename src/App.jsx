@@ -15,6 +15,8 @@ function App() {
   const query = new URLSearchParams(location.search);
   const idFunc = parseInt(query.get("idfunc"), 10);
 
+  // Singleton
+
   const [machines, setMachines] = useState(() => {
     const storedMachines = localStorage.getItem("machines");
     return storedMachines ? JSON.parse(storedMachines) : [];
@@ -58,6 +60,8 @@ function App() {
   const [alert, setAlert] = useState([]);
   const [selectedMachineId, setSelectedMachineId] = useState(null);
   const [alertedMachines, setAlertedMachines] = useState(new Set());
+
+  // Factory
 
   function onMachineAdd(id, func) {
     const newMachine = {
@@ -150,6 +154,8 @@ function App() {
       })
     );
   }
+
+  // Command
 
   function turnOnMachine() {
     setMachines((prevMachines) =>
