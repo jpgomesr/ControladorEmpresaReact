@@ -59,7 +59,5 @@ To run the project locally:
    For any questions, suggestions, or feedback, feel free to reach out:
 
    - **Your Name:** [jpgomesr07@gmail.com](mailto:jpgomesr07@gmail.com)
-   - **GitHub:** [João Paulo](https://github.com/your-username)
-   - **LinkedIn:** [Your LinkedIn Profile](https://www.linkedin.com/in/your-profile)
-
-   You can also create issues in the repository if you encounter any bugs or have feature requests.
+   - **GitHub:** [João Paulo](https://github.com/jpgomesr)
+   - **LinkedIn:** [João Paulo](https://www.linkedin.com/in/jo%C3%A3o-paulo-gomes-rodrigues-a756722a0/)
