@@ -58,6 +58,6 @@ To run the project locally:
 
    For any questions, suggestions, or feedback, feel free to reach out:
 
-   - **Your Name:** [jpgomesr07@gmail.com](mailto:jpgomesr07@gmail.com)
+   - **Email:** [jpgomesr07@gmail.com](mailto:jpgomesr07@gmail.com)
    - **GitHub:** [João Paulo](https://github.com/jpgomesr)
    - **LinkedIn:** [João Paulo](https://www.linkedin.com/in/jo%C3%A3o-paulo-gomes-rodrigues-a756722a0/)
