@@ -19,12 +19,22 @@ function App() {
 
   const [machines, setMachines] = useState(() => {
     const storedMachines = localStorage.getItem("machines");
-    return storedMachines ? JSON.parse(storedMachines) : [];
+    try {
+      return storedMachines ? JSON.parse(storedMachines) : [];
+    } catch (e) {
+      console.error("Error parsing machines:", e);
+      return [];
+    }
   });
 
   const [repair, setRepair] = useState(() => {
     const storedRepair = localStorage.getItem("repair");
-    return storedRepair ? JSON.parse(storedRepair) : [];
+    try {
+      return storedRepair ? JSON.parse(storedRepair) : [];
+    } catch (e) {
+      console.error("Error parsing repair:", e);
+      return [];
+    }
   });
 
   useEffect(() => {
@@ -159,11 +169,16 @@ function App() {
 
   function turnOnMachine() {
     setMachines((prevMachines) =>
-      prevMachines.map((machine) => (machine.status == "Danificada" ? {
-        ...machine
-      } : {
-        ...machine, status: "Ligada"
-      }))
+      prevMachines.map((machine) =>
+        machine.status == "Danificada"
+          ? {
+              ...machine,
+            }
+          : {
+              ...machine,
+              status: "Ligada",
+            }
+      )
     );
   }
 
