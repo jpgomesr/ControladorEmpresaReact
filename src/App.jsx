@@ -4,6 +4,7 @@ import Machine from "./components/Machine";
 import RepairButton from "./components/RepairButton";
 import Alerts from "./components/Alerts";
 import AddMachine from "./components/AddMachine";
+import AddMachineType from "./components/AddMachineType";
 import Info from "./components/Info";
 import { v4 } from "uuid";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -286,7 +287,8 @@ function App() {
           </p>
         </div>
       </header>
-      <div className="w-full flex justify-center mt-4">
+      <div className="w-full flex flex-col items-center mt-4 space-y-6">
+        <AddMachineType />
         <AddMachine
           machines={machines}
           onMachineAdd={onMachineAdd}
