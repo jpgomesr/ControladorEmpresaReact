@@ -16,18 +16,31 @@ function Info({ machines, machineId, closeModal }) {
               <h1>Maquina {machine ? machine.id : "Não encontrada"}</h1>
             </div>
           </div>
-          <div className="flex flex-col items-start w-full ml-[12rem] space-y-16">
+          <div className="flex flex-col items-start w-full ml-[12rem] space-y-10">
             {machine ? (
               <>
                 <p className="text-[1.2rem] font-semibold">
+                  Tipo: {machine.name}
+                </p>
+                <p className="text-[1.2rem] font-semibold">
                   Status: {machine.status}
                 </p>
-                <p className="text-[1.2rem] font-semibold">
-                  Temperatura: {machine.temp}°C
-                </p>
-                <p className="text-[1.2rem] font-semibold">
-                  Umidade: {machine.humy}%
-                </p>
+                <div className="flex flex-col gap-4">
+                  <p className="text-[1.2rem] font-semibold">Informações:</p>
+                  <div>
+                    {machine.infos &&
+                      machine.infos.map((info, index) => (
+                        <>
+                          <p
+                            key={index}
+                            className="text-[1.2rem] font-semibold"
+                          >
+                            {info.name}: {info.baseValue} {info.unit}
+                          </p>
+                        </>
+                      ))}
+                  </div>
+                </div>
                 <p className="text-[1.2rem] font-semibold">
                   Id funcionário responsável: {machine.idFunc}
                 </p>

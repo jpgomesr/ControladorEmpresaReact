@@ -16,7 +16,11 @@ function Machine({ machines, onDeleteMachine, openModal, funcionario }) {
             >
               <div className="h-full flex items-center flex-col justify-center text-center gap-2">
                 <p>Máquina {machine.id}</p>
-                <p>{machine.status}</p>
+                <p>Status: {machine.status}</p>
+                {/* {machines &&
+                  machines.infos.map((machine) => {
+                    <p>{machine.infos}</p>;
+                  })} */}
               </div>
               <div className="flex justify-end items-end pb-2 gap-4">
                 <button className="flex btn hover:transition-transform hover:scale-125">

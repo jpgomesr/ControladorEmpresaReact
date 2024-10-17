@@ -38,6 +38,16 @@ function App() {
     }
   });
 
+  const [machineTypes, setMachineTypes] = useState(() => {
+    const storedMachineTypes = localStorage.getItem("machineTypes");
+    try {
+      return storedMachineTypes ? JSON.parse(storedMachineTypes) : [];
+    } catch (e) {
+      console.error("Error parsing repair:", e);
+      return [];
+    }
+  });
+
   useEffect(() => {
     localStorage.setItem("machines", JSON.stringify(machines));
   }, [machines]);
@@ -47,12 +57,20 @@ function App() {
   }, [repair]);
 
   useEffect(() => {
-    const storedMachines = localStorage.getItem("machines");
-    if (storedMachines) {
-      setMachines(JSON.parse(storedMachines));
-    } else {
-      setMachines([]);
+    localStorage.setItem("machineTypes", JSON.stringify(machineTypes));
+  }, [machineTypes]);
+
+  useEffect(() => {
+    async function fetchTasks() {
+      const storedData = localStorage.getItem("machines");
+      if (storedData) {
+        const data = JSON.parse(storedData);
+        setMachines(data);
+      } else {
+        setMachines([]);
+      }
     }
+    fetchTasks();
   }, []);
 
   useEffect(() => {
@@ -68,24 +86,39 @@ function App() {
     fetchTasks();
   }, []);
 
+  useEffect(() => {
+    async function fetchTasks() {
+      const storedData = localStorage.getItem("machineTypes");
+      if (storedData) {
+        const data = JSON.parse(storedData);
+        setMachineTypes(data);
+      } else {
+        setMachineTypes([]);
+      }
+    }
+    fetchTasks();
+  }, []);
+
   const [alert, setAlert] = useState([]);
   const [selectedMachineId, setSelectedMachineId] = useState(null);
   const [alertedMachines, setAlertedMachines] = useState(new Set());
 
   // Factory
 
-  function onMachineAdd(id, func) {
+  function onMachineAdd(id, func, name, type) {
     const newMachine = {
       id: id,
       idFunc: parseInt(func),
-      temp: 50,
-      humy: 50,
+      name: name,
       status: "Desligada",
+      infos: type.variables,
     };
     const newButton = {
       id: id,
       idFunc: func,
     };
+
+    console.log(newMachine);
 
     setMachines((prev) => {
       const updatedMachines = [...prev, newMachine];
@@ -108,56 +141,71 @@ function App() {
     setAlert((prev) => prev.filter((alert) => alert.machineId !== machineId));
   }
 
-  function generateRandomTempAndHumy(machineId) {
+  function generateRandomInfos(machineId) {
     setMachines((prevMachines) =>
       prevMachines.map((machine) => {
         if (
           (machine.id === machineId && machine.status === "Ligada") ||
           machine.status === "Atenção"
         ) {
-          const variation = 10;
-          const newTemp = Math.max(
-            0,
-            Math.min(
-              100,
-              machine.temp +
-                Math.floor(Math.random() * (variation * 2 + 1)) -
-                variation
-            )
-          );
-          const newHumy = Math.max(
-            0,
-            Math.min(
-              100,
-              machine.humy +
-                Math.floor(Math.random() * (variation * 2 + 1)) -
-                variation
-            )
-          );
-
           let newStatus = machine.status;
-          if (newTemp > 90 || newHumy > 90) {
-            newStatus = "Danificada";
-            alertSender(
-              `Máquina ${machine.id}`,
-              "Máquina danificada!",
-              machine.id
+
+          const newInfos = machine.infos.map((info) => {
+            const maxDifference = 5;
+            const previousValue = info.baseValue;
+
+            const adjustedValue = Math.max(
+              info.min,
+              Math.min(
+                info.max,
+                previousValue +
+                  (Math.random() > 0.5
+                    ? Math.floor(Math.random() * (maxDifference + 1))
+                    : -Math.floor(Math.random() * (maxDifference + 1)))
+              )
             );
-          } else if (newTemp > 70 || newHumy > 70) {
-            newStatus = "Atenção";
-            alertSender(
-              `Máquina ${machine.id}`,
-              "Atenção necessária!",
-              machine.id
-            );
-          } else {
-            newStatus = "Ligada";
-          }
+
+            const updatedInfo = {
+              ...info,
+              baseValue: adjustedValue,
+            };
+
+            if (adjustedValue <= info.min) {
+              newStatus = "Danificada";
+              alertSender(
+                `Máquina ${machine.id}`,
+                "Máquina danificada: valor muito baixo!",
+                machine.id
+              );
+            } else if (adjustedValue <= info.min * 1.1) {
+              newStatus = "Atenção";
+              alertSender(
+                `Máquina ${machine.id}`,
+                "Atenção necessária: valor próximo ao mínimo!",
+                machine.id
+              );
+            } else if (adjustedValue >= info.max) {
+              newStatus = "Danificada";
+              alertSender(
+                `Máquina ${machine.id}`,
+                "Máquina danificada: valor muito alto!",
+                machine.id
+              );
+            } else if (adjustedValue >= info.max * 0.9) {
+              newStatus = "Atenção";
+              alertSender(
+                `Máquina ${machine.id}`,
+                "Atenção necessária: valor próximo ao máximo!",
+                machine.id
+              );
+            }
+
+            return updatedInfo;
+          });
 
           return {
             ...machine,
-            temp: newTemp,
-            humy: newHumy,
+            infos: newInfos,
             status: newStatus,
           };
         }
@@ -185,18 +233,19 @@ function App() {
 
   function turnOffMachine() {
     setMachines((prevMachines) =>
-      prevMachines.map((machine) =>
-        machine.status == "Ligada" || machine.status == "Atenção"
-          ? {
-              ...machine,
-              status: "Desligada",
-              temp: 50,
-              humy: 50,
-            }
-          : {
-              ...machine,
-            }
-      )
+      prevMachines.map((machine) => {
+        if (machine.status === "Ligada" || machine.status === "Atenção") {
+          return {
+            ...machine,
+            status: "Desligada",
+            infos: machine.infos.map((info) => ({
+              ...info,
+              baseValue: Math.round((info.min + info.max) / 2),
+            })),
+          };
+        }
+        return machine;
+      })
     );
   }
 
@@ -207,16 +256,25 @@ function App() {
           setAlert((prevAlerts) =>
             prevAlerts.filter((alert) => alert.machineId !== machineId)
           );
+
           setAlertedMachines((prev) => {
             const newSet = new Set(prev);
             newSet.delete(machineId);
             return newSet;
           });
+
+          const updatedInfos = machine.infos.map((info) => {
+            const averageValue = Math.round((info.min + info.max) / 2);
+            return {
+              ...info,
+              baseValue: averageValue,
+            };
+          });
+
           return {
             ...machine,
             status: "Ligada",
-            temp: 50,
-            humy: 50,
+            infos: updatedInfos,
           };
         }
         return machine;
@@ -230,7 +288,7 @@ function App() {
       .map((machine) => {
         if (machine.status === "Ligada" || machine.status === "Atenção") {
           const intervalId = setInterval(() => {
-            generateRandomTempAndHumy(machine.id);
+            generateRandomInfos(machine.id);
           }, 1000);
           return { id: machine.id, intervalId };
         }
@@ -275,6 +333,17 @@ function App() {
     setAlertedMachines(new Set());
   }
 
+  const handleAddMachineTypes = (newMachineTypes) => {
+    console.log("Novo tipo de máquina adicionado:", newMachineTypes);
+    setMachineTypes((prev) => [...prev, newMachineTypes]);
+  };
+
+  const onDeleteMachineType = (typeToDelete) => {
+    setMachineTypes((prevTypes) =>
+      prevTypes.filter((type) => type.name !== typeToDelete)
+    );
+  };
+
   return (
     <>
       <header className="bg-gray-600 flex items-center justify-between py-6 px-8">
@@ -287,12 +356,14 @@ function App() {
           </p>
         </div>
       </header>
-      <div className="w-full flex flex-col items-center mt-4 space-y-6">
-        <AddMachineType />
+      <div className="w-full flex flex-row items-center mt-8 justify-center space-x-12">
+        <AddMachineType onAddMachineTypes={handleAddMachineTypes} />
         <AddMachine
           machines={machines}
           onMachineAdd={onMachineAdd}
           idFunc={idFunc}
+          machineTypes={machineTypes}
+          onDeleteMachineType={onDeleteMachineType}
         />
       </div>
       <div className="w-full justify-center flex items-center flex-col space-y-8 mt-6">
