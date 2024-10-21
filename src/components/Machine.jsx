@@ -12,7 +12,7 @@ function Machine({ machines, onDeleteMachine, openModal, funcionario }) {
                )
                .map((machine) => (
                   <div
-                     key={machine.machineId}
+                     key={machine.id}
                      className="w-[10rem] flex flex-col justify-center items-center h-[10rem] border-[1px] border-gray-300 shadow-lg"
                   >
                      <div className="h-full flex items-center flex-col justify-center text-center gap-2">

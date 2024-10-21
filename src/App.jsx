@@ -122,8 +122,6 @@ function App() {
          idFunc: func,
       };
 
-      console.log(newMachine);
-
       setMachines((prev) => {
          const updatedMachines = [...prev, newMachine];
          return updatedMachines.sort((a, b) => a.id - b.id);
@@ -305,7 +303,6 @@ function App() {
    }
 
    useEffect(() => {
-      console.log(machines);
       const intervalIds = machines
          .map((machine) => {
             if (machine.status === "Ligada" || machine.status === "Atenção") {
@@ -337,31 +334,26 @@ function App() {
    }
 
    function openModalAddMachineType() {
-      setIsModalAddMachineTypeVisible(true);
-      const elemento = document.getElementById("modalAddMachineType");
-      elemento.style.display = "flex";
+      if (!isModalAddMachineVisible) {
+         setIsModalAddMachineTypeVisible(true);
+      }
    }
 
    function closeModalAddMachineType() {
       setIsModalAddMachineTypeVisible(false);
-      const elemento = document.getElementById("modalAddMachineType");
-      elemento.style.display = "none";
    }
 
    function openModalAddMachine() {
-      setModalAddMachineVisible(true);
-      const elemento = document.getElementById("modalAddMachine");
-      elemento.style.display = "flex";
+      if (!isModalAddMachineTypeVisible) {
+         setModalAddMachineVisible(true);
+      }
    }
 
    function closeModalAddMachine() {
       setModalAddMachineVisible(false);
-      const elemento = document.getElementById("modalAddMachine");
-      elemento.style.display = "none";
    }
 
    function alertSender(title, description, machineId, info, unit, name) {
-      console.log("Alert sent for machine:", machineId);
       if (!alertedMachines.has(machineId)) {
          const newAlert = {
             id: v4(),
@@ -388,7 +380,6 @@ function App() {
    }
 
    const handleAddMachineTypes = (newMachineTypes) => {
-      console.log("Novo tipo de máquina adicionado:", newMachineTypes);
       setMachineTypes((prev) => [...prev, newMachineTypes]);
    };
 
@@ -473,7 +464,7 @@ function App() {
             )}
          </div>
          <div className="w-full justify-center flex items-center flex-col space-y-8 mt-6">
-            <div className="w-[50%] flex flex-wrap gap-8 justify-center">
+            <div className="w-[60%] flex flex-wrap gap-8 justify-center">
                <Machine
                   machines={machines}
                   onDeleteMachine={onDeleteMachine}
@@ -512,7 +503,7 @@ function App() {
                   </button>
                </div>
             )}
-            <div className="w-[40%] flex flex-col justify-center">
+            <div className="w-[60%] flex flex-col justify-center">
                <div className="flex flex-wrap justify-center items-center gap-6">
                   <RepairButton
                      repair={repair}

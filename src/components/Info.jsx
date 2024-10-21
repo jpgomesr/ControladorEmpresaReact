@@ -16,7 +16,10 @@ function Info({ machines, machineId, closeModal }) {
                      <h1>Maquina {machine ? machine.id : "Não encontrada"}</h1>
                   </div>
                </div>
-               <div className="flex flex-col items-start w-full ml-[12rem] space-y-10">
+               <div
+                  key={machineId}
+                  className="flex flex-col items-start w-full ml-[12rem] space-y-10"
+               >
                   {machine ? (
                      <>
                         <p className="text-[1.2rem] font-semibold">
@@ -32,15 +35,12 @@ function Info({ machines, machineId, closeModal }) {
                            <div>
                               {machine.infos &&
                                  machine.infos.map((info, index) => (
-                                    <>
-                                       <p
-                                          key={index}
-                                          className="text-[1.2rem] font-semibold"
-                                       >
-                                          {info.name}: {info.baseValue} 
-                                          {info.unit}
-                                       </p>
-                                    </>
+                                    <p
+                                       key={index}
+                                       className="text-[1.2rem] font-semibold"
+                                    >
+                                       {info.name}: {info.baseValue} {info.unit}
+                                    </p>
                                  ))}
                            </div>
                         </div>
