@@ -175,7 +175,8 @@ function App() {
               alertSender(
                 `Máquina ${machine.id}`,
                 "Máquina danificada: valor muito baixo!",
-                machine.id
+                machine.id,
+                info.baseValue
               );
             } else if (adjustedValue <= info.min * 1.1) {
               newStatus = "Atenção";
