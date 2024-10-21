@@ -6,18 +6,18 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Login />,
-  },
-  {
-    path: "/machine",
-    element: <App />,
-  },
+   {
+      path: "/",
+      element: <Login />,
+   },
+   {
+      path: "/machine",
+      element: <App />,
+   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
+   <StrictMode>
+      <RouterProvider router={router} />
+   </StrictMode>
 );
