@@ -72,7 +72,7 @@ function App() {
     }
     fetchTasks();
   }, []);
-
+  
   useEffect(() => {
     async function fetchTasks() {
       const storedData = localStorage.getItem("repair");
@@ -176,28 +176,39 @@ function App() {
                 `Máquina ${machine.id}`,
                 "Máquina danificada: valor muito baixo!",
                 machine.id,
-                info.baseValue
+                info.baseValue,
+                info.unit,
+                info.name
               );
             } else if (adjustedValue <= info.min * 1.1) {
               newStatus = "Atenção";
               alertSender(
                 `Máquina ${machine.id}`,
                 "Atenção necessária: valor próximo ao mínimo!",
-                machine.id
+                machine.id,
+                info.baseValue,
+                info.unit,
+                info.name
               );
             } else if (adjustedValue >= info.max) {
               newStatus = "Danificada";
               alertSender(
                 `Máquina ${machine.id}`,
                 "Máquina danificada: valor muito alto!",
-                machine.id
+                machine.id,
+                info.baseValue,
+                info.unit,
+                info.name
               );
             } else if (adjustedValue >= info.max * 0.9) {
               newStatus = "Atenção";
               alertSender(
                 `Máquina ${machine.id}`,
                 "Atenção necessária: valor próximo ao máximo!",
-                machine.id
+                machine.id,
+                info.baseValue,
+                info.unit,
+                info.name
               );
             }
 
@@ -315,10 +326,18 @@ function App() {
     elemento.style.display = "none";
   }
 
-  function alertSender(title, description, machineId) {
+  function alertSender(title, description, machineId, info, unit, name) {
     console.log("Alert sent for machine:", machineId);
     if (!alertedMachines.has(machineId)) {
-      const newAlert = { id: v4(), title, description, machineId };
+      const newAlert = {
+        id: v4(),
+        title,
+        description,
+        machineId,
+        info: info,
+        unit: unit,
+        nameVar: name,
+      };
       setAlert((prevAlerts) => {
         if (prevAlerts.length >= 10) {
           return [...prevAlerts.slice(1), newAlert];

@@ -27,6 +27,21 @@ function Alerts({ alert, machines, funcionario }) {
                     {machine && (
                       <p className="text-gray-700">Status: {machine.status}</p>
                     )}
+                    <p className="text-gray-700 font-bold">Movivo do alerta:</p>
+                    {machines.map((machine) => {
+                      if (machine.id === alertItem.machineId) {
+                        return machine.infos.map((info) => {
+                          if (info.name == alertItem.nameVar) {
+                            return (
+                              <p className="text-gray-700">
+                                {alertItem.nameVar}: {info.baseValue}{" "}
+                                {alertItem.unit}
+                              </p>
+                            );
+                          }
+                        });
+                      }
+                    })}
                   </div>
                 </li>
               );
