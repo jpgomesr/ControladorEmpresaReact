@@ -26,16 +26,14 @@ function Info({ machines, machineId, closeModal }) {
                         </p>
                         <p className="text-[1.5rem] font-semibold">
                            Status:{" "}
-                           <span className="text-yellow-400">
-                              {machine.status}
-                           </span>
+                           <span className="text-white">{machine.status}</span>
                         </p>
 
                         <div className="flex flex-col gap-2">
                            <p className="text-[1.5rem] font-semibold">
                               Informações:
                            </p>
-                           <div className="space-y-1">
+                           <div className="space-y-1"> 
                               {machine.infos &&
                                  machine.infos.map((info, index) => (
                                     <p

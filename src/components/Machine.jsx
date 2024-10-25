@@ -33,13 +33,7 @@ function Machine({
                         <p className="text-lg font-semibold">
                            Máquina {machine.id}
                         </p>
-                        <p
-                           className={`text-md font-medium ${
-                              machine.status === "Ativo"
-                                 ? "text-green-600"
-                                 : "text-red-600"
-                           }`}
-                        >
+                        <p className="text-md text-gray-700">
                            Status: {machine.status}
                         </p>
                         <div className="flex justify-center items-center gap-4 mt-2">
