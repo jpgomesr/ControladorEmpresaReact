@@ -106,6 +106,7 @@ function App() {
       useState(false);
    const [isModalAddMachineVisible, setModalAddMachineVisible] =
       useState(false);
+   const [selectedMachines, setSelectedMachines] = useState([]);
 
    // Factory
 
@@ -237,32 +238,27 @@ function App() {
    // Command
 
    function turnOnMachine() {
-      setMachines((prevMachines) =>
-         prevMachines.map((machine) =>
-            machine.status == "Danificada"
-               ? {
-                    ...machine,
-                 }
-               : {
-                    ...machine,
-                    status: "Ligada",
-                 }
-         )
+      setMachines((prevSelectedMachines) =>
+         prevSelectedMachines.map((machine) => {
+            if (
+               selectedMachines.some((element) => machine.id == element) &&
+               machine.status !== "Danificada"
+            ) {
+               return { ...machine, status: "Ligada" };
+            }
+            return machine;
+         })
       );
    }
 
    function turnOffMachine() {
-      setMachines((prevMachines) =>
-         prevMachines.map((machine) => {
-            if (machine.status === "Ligada" || machine.status === "Atenção") {
-               return {
-                  ...machine,
-                  status: "Desligada",
-                  infos: machine.infos.map((info) => ({
-                     ...info,
-                     baseValue: Math.round((info.min + info.max) / 2),
-                  })),
-               };
+      setMachines((prevSelectedMachines) =>
+         prevSelectedMachines.map((machine) => {
+            if (
+               selectedMachines.some((element) => machine.id == element) &&
+               machine.status !== "Danificada"
+            ) {
+               return { ...machine, status: "Desligada" };
             }
             return machine;
          })
@@ -389,6 +385,22 @@ function App() {
       );
    };
 
+   const handleAddTurnMachine = (e) => {
+      const newSelected = e.target.value;
+
+      setSelectedMachines((prevSelectedMachines) => {
+         if (prevSelectedMachines.includes(newSelected)) {
+            return prevSelectedMachines.filter(
+               (element) => element !== newSelected
+            );
+         } else {
+            return [...prevSelectedMachines, newSelected];
+         }
+      });
+
+      console.log(selectedMachines);
+   };
+
    return (
       <>
          <header className="bg-gray-600 flex items-center justify-between py-6 px-8">
@@ -472,6 +484,7 @@ function App() {
                   turnOffMachine={turnOffMachine}
                   openModal={openModal}
                   funcionario={idFunc}
+                  handleAddTurnMachine={handleAddTurnMachine}
                />
             </div>
          </div>
