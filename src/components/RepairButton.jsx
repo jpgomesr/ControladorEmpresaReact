@@ -12,9 +12,9 @@ function RepairButton({ repair, repairMachine, funcionario }) {
                   <button
                      key={repairB.id}
                      onClick={() => repairMachine(repairB.id)}
-                     className="shadow-lg bg-blue-500 py-1 px-2 rounded-lg text-white font-bold hover:scale-110 hover:transition-transform"
+                     className="bg-gradient-to-r from-blue-500 to-blue-400 shadow-lg py-2 px-4 rounded-lg text-white font-bold transition-transform duration-300 hover:scale-105 hover:shadow-xl"
                   >
-                     Reparar Maquina {repairB.id}
+                     Reparar Máquina {repairB.id}
                   </button>
                ))}
       </>

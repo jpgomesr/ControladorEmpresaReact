@@ -401,44 +401,42 @@ function App() {
 
    return (
       <>
-         <header className="bg-gray-600 flex items-center justify-between py-6 px-8">
+         <header className="bg-gradient-to-r from-blue-800 to-blue-600 flex items-center justify-between py-6 px-8 shadow-lg">
             <button className="text-white">
                <ChevronLeftIcon onClick={() => navigate(-1)} />
             </button>
             <div className="w-full flex justify-center">
                <p className="text-white font-bold text-3xl">
-                  Gerenciador de Maquinas
+                  Gerenciador de Máquinas
                </p>
             </div>
          </header>
-         <div className="w-full flex flex-row items-center mt-8 justify-center">
-            <div className="flex flex-row gap-8">
+
+         <div className="flex flex-col items-center mt-8">
+            <div className="flex flex-row gap-8 mb-8">
                <button
-                  className="px-2 py-1 bg-blue-500 font-bold rounded-lg text-white"
+                  className="px-4 py-2 bg-blue-500 font-bold rounded-lg text-white transition hover:bg-blue-600 shadow-md"
                   onClick={openModalAddMachineType}
                >
                   Criar tipo de máquina
                </button>
                <button
-                  className="px-2 py-1 bg-blue-500 font-bold rounded-lg text-white"
+                  className="px-4 py-2 bg-blue-500 font-bold rounded-lg text-white transition hover:bg-blue-600 shadow-md"
                   onClick={openModalAddMachine}
                >
                   Criar máquina
                </button>
             </div>
+
             {isModalAddMachineTypeVisible && (
-               <div
-                  className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[43rem] z-50 bg-white shadow-xl p-6 rounded-lg"
-                  datatype="modal"
-                  id="modalAddMachineType"
-               >
+               <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[43rem] z-50 bg-white shadow-xl p-6 rounded-lg">
                   <div className="w-full flex flex-col gap-2">
                      <AddMachineType
                         onAddMachineTypes={handleAddMachineTypes}
                      />
                      <div className="w-full flex align-center justify-center">
                         <button
-                           className="text-center bg-red-500 font-bold px-2 py-1 rounded-lg"
+                           className="text-center bg-red-500 font-bold px-4 py-2 rounded-lg transition hover:bg-red-600"
                            onClick={closeModalAddMachineType}
                         >
                            Fechar
@@ -447,12 +445,9 @@ function App() {
                   </div>
                </div>
             )}
+
             {isModalAddMachineVisible && (
-               <div
-                  className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[43rem] z-50 bg-white shadow-xl p-6 rounded-lg"
-                  datatype="modal"
-                  id="modalAddMachine"
-               >
+               <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[43rem] z-50 bg-white shadow-xl p-6 rounded-lg">
                   <div className="w-full flex flex-col gap-2">
                      <AddMachine
                         machines={machines}
@@ -463,7 +458,7 @@ function App() {
                      />
                      <div className="w-full flex align-center justify-center">
                         <button
-                           className="text-center bg-red-500 font-bold px-2 py-1 rounded-lg"
+                           className="text-center bg-red-500 font-bold px-4 py-2 rounded-lg transition hover:bg-red-600"
                            onClick={closeModalAddMachine}
                         >
                            Fechar
@@ -473,6 +468,7 @@ function App() {
                </div>
             )}
          </div>
+
          <div className="w-full justify-center flex items-center flex-col space-y-8 mt-6">
             <div className="w-[60%] flex flex-wrap gap-8 justify-center">
                <Machine
@@ -486,31 +482,21 @@ function App() {
                />
             </div>
          </div>
-         <div
-            datatype="modal"
-            id="modal"
-            className="hidden fixed top-[50%] left-[50%]"
-         >
-            <Info
-               machines={machines}
-               machineId={selectedMachineId}
-               closeModal={closeModal}
-            />
-         </div>
+
          <div className="w-full justify-center flex items-center flex-col space-y-8 mt-6">
             {machines.length > 0 && (
                <div className="space-x-4">
                   <button
                      onClick={turnOnMachine}
-                     className="bg-green-500 px-2 py-1 font-bold rounded-lg hover:transition-transform hover:scale-110 shadow-lg"
+                     className="bg-green-500 px-4 py-2 font-bold rounded-lg hover:transition-transform hover:scale-110 shadow-lg transition"
                   >
-                     Iniciar Maquinas
+                     Iniciar Máquinas
                   </button>
                   <button
                      onClick={turnOffMachine}
-                     className="bg-red-500 px-2 py-1 font-bold rounded-lg hover:transition-transform hover:scale-110 shadow-lg"
+                     className="bg-red-500 px-4 py-2 font-bold rounded-lg hover:transition-transform hover:scale-110 shadow-lg transition"
                   >
-                     Desligar Maquinas
+                     Desligar Máquinas
                   </button>
                </div>
             )}
@@ -527,13 +513,26 @@ function App() {
                <div className="w-[40%] flex flex-col items-center">
                   <button
                      onClick={clearAlerts}
-                     className="bg-red-700 text-white font-bold py-2 px-4 rounded-xl text-[1.1rem]"
+                     className="bg-red-700 text-white font-bold py-2 px-4 rounded-xl text-[1.1rem] transition hover:bg-red-800"
                   >
                      Limpar Alertas
                   </button>
                </div>
             )}
          </div>
+
+         <div
+            datatype="modal"
+            id="modal"
+            className="hidden fixed top-[50%] left-[50%] z-50 transform -translate-x-1/2 -translate-y-1/2"
+         >
+            <Info
+               machines={machines}
+               machineId={selectedMachineId}
+               closeModal={closeModal}
+            />
+         </div>
+
          <footer className="flex flex-row w-full py-6 justify-center items-center">
             <div className="flex flex-col w-[50%] py-3 px-1">
                <Alerts alert={alert} machines={machines} funcionario={idFunc} />

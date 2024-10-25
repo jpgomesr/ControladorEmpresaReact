@@ -69,19 +69,19 @@ function AddMachine({
    };
 
    return (
-      <div className="bg-gray-700 py-6 rounded-xl flex flex-col gap-3 items-center justify-center w-[40.2rem] h-[19rem]">
-         <p className="text-white font-bold text-[1.3rem]">Criar Máquina</p>
-         <div className="flex flex-col gap-4">
+      <div className="bg-gradient-to-r from-blue-700 to-blue-600 py-6 rounded-xl flex flex-col gap-3 items-center justify-center w-[40.2rem] h-[19rem] shadow-lg">
+         <p className="text-white font-bold text-[1.5rem]">Criar Máquina</p>
+         <div className="flex flex-col gap-4 w-full px-4">
             <div className="flex flex-row gap-4 items-center justify-center">
                <input
-                  className="px-2 rounded-lg w-[6.88rem] py-2"
+                  className="px-3 rounded-lg w-[6.88rem] py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={id}
                   onChange={(event) => setId(event.target.value)}
                   type="number"
                   placeholder="Id Máquina"
                />
                <input
-                  className="px-2 rounded-lg w-[6.88rem] py-2"
+                  className="px-3 rounded-lg w-[6.88rem] py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={func}
                   onChange={(event) => setFunc(event.target.value)}
                   type="number"
@@ -98,7 +98,7 @@ function AddMachine({
                      id="types"
                      value={selectedType}
                      onChange={(event) => setSelectedType(event.target.value)}
-                     className="px-2 py-1 rounded-lg"
+                     className="px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                      <option value="" disabled>
                         Selecione um tipo
@@ -110,7 +110,7 @@ function AddMachine({
                      ))}
                   </select>
                   <button
-                     className="flex items-center justify-center bg-red-500 px-2 py-1 rounded-xl font-bold"
+                     className="flex items-center justify-center bg-red-600 px-3 py-2 rounded-lg font-bold transition hover:bg-red-700"
                      onClick={handleDeleteType}
                   >
                      Deletar tipo
@@ -119,7 +119,7 @@ function AddMachine({
             </div>
             <button
                onClick={handleAddMachine}
-               className="bg-blue-800 text-white font-semibold px-3 py-1 rounded-lg"
+               className="bg-green-600 text-white font-semibold px-4 py-2 rounded-lg transition hover:bg-green-500"
             >
                Adicionar Máquina
             </button>
