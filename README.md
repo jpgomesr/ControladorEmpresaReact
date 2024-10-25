@@ -10,7 +10,6 @@ This project is a management and monitoring system for machines focused on the b
 - **Real-Time Monitoring:** Machines are continuously monitored, with updates on temperature and humidity every second.
 - **Status Alerts:** The system sends alerts when a machine reaches critical conditions, such as excessive temperature or humidity.
 - **Operation Control:** Users can easily turn machines on and off.
-- **Repair History:** Users can record and manage repairs needed for the machines.
 
 ## Technologies Used
 
