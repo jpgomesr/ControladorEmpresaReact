@@ -397,8 +397,6 @@ function App() {
             return [...prevSelectedMachines, newSelected];
          }
       });
-
-      console.log(selectedMachines);
    };
 
    return (
