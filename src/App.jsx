@@ -9,6 +9,7 @@ import Info from "./components/Info";
 import { v4 } from "uuid";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ChevronLeftIcon } from "lucide-react";
+import MachineSearch from "./components/MachineSearch";
 
 function App() {
    const navigate = useNavigate();
@@ -107,6 +108,7 @@ function App() {
    const [isModalAddMachineVisible, setModalAddMachineVisible] =
       useState(false);
    const [selectedMachines, setSelectedMachines] = useState([]);
+   const [searchValue, setSearchValue] = useState();
 
    // Factory
 
@@ -399,6 +401,15 @@ function App() {
       });
    };
 
+   const handleSearchMachines = (search) => {
+      setSearchValue(() => {
+         if (search != null) {
+            return search;
+         }
+         return null;
+      });
+   };
+
    return (
       <>
          <header className="bg-gradient-to-r from-blue-800 to-blue-600 flex items-center justify-between py-6 px-8 shadow-lg">
@@ -469,6 +480,10 @@ function App() {
             )}
          </div>
 
+         <div className="flex justify-center items-center px-2 py-1">
+            <MachineSearch handleSearchMachines={handleSearchMachines} />
+         </div>
+
          <div className="w-full justify-center flex items-center flex-col space-y-8 mt-6">
             <div className="w-[60%] flex flex-wrap gap-8 justify-center">
                <Machine
@@ -479,6 +494,7 @@ function App() {
                   openModal={openModal}
                   funcionario={idFunc}
                   handleAddTurnMachine={handleAddTurnMachine}
+                  searchValue={searchValue}
                />
             </div>
          </div>
@@ -500,12 +516,13 @@ function App() {
                   </button>
                </div>
             )}
-            <div className="w-[60%] flex flex-col justify-center">
+            <div className="w-[50%] flex flex-col justify-center">
                <div className="flex flex-wrap justify-center items-center gap-6">
                   <RepairButton
                      repair={repair}
                      repairMachine={repairMachine}
                      funcionario={idFunc}
+                     searchValue={searchValue}
                   />
                </div>
             </div>
