@@ -119,6 +119,7 @@ function App() {
          name: name,
          status: "Desligada",
          infos: type.variables,
+         checked: false,
       };
       const newButton = {
          id: id,
@@ -489,12 +490,11 @@ function App() {
                <Machine
                   machines={machines}
                   onDeleteMachine={onDeleteMachine}
-                  turnOnMachine={turnOnMachine}
-                  turnOffMachine={turnOffMachine}
                   openModal={openModal}
                   funcionario={idFunc}
                   handleAddTurnMachine={handleAddTurnMachine}
                   searchValue={searchValue}
+                  selectedMachines={selectedMachines}
                />
             </div>
          </div>

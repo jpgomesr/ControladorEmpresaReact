@@ -7,6 +7,7 @@ function Machine({
    funcionario,
    handleAddTurnMachine,
    searchValue,
+   selectedMachines,
 }) {
    const filteredMachines = machines.filter((machine) => {
       const isFuncionarioMatch =
@@ -29,6 +30,7 @@ function Machine({
                   name={machine.id}
                   id={machine.id}
                   value={machine.id}
+                  checked={selectedMachines.includes(machine.id.toString())}
                   onChange={handleAddTurnMachine}
                   className="absolute top-2 left-2"
                />
