@@ -389,17 +389,13 @@ function App() {
    };
 
    const handleAddTurnMachine = (e) => {
-      const newSelected = e.target.value;
+      const machineId = e.target.value;
 
-      setSelectedMachines((prevSelectedMachines) => {
-         if (prevSelectedMachines.includes(newSelected)) {
-            return prevSelectedMachines.filter(
-               (element) => element !== newSelected
-            );
-         } else {
-            return [...prevSelectedMachines, newSelected];
-         }
-      });
+      if (selectedMachines.includes(machineId)) {
+         setSelectedMachines(selectedMachines.filter((id) => id !== machineId));
+      } else {
+         setSelectedMachines([...selectedMachines, machineId]);
+      }
    };
 
    const handleSearchMachines = (search) => {
@@ -495,6 +491,7 @@ function App() {
                   handleAddTurnMachine={handleAddTurnMachine}
                   searchValue={searchValue}
                   selectedMachines={selectedMachines}
+                  setSelectedMachines={setSelectedMachines}
                />
             </div>
          </div>
