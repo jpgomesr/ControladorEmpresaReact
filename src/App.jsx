@@ -444,7 +444,7 @@ function App() {
                      />
                      <div className="w-full flex align-center justify-center">
                         <button
-                           className="text-center bg-red-500 font-bold px-4 py-2 rounded-lg transition hover:bg-red-600"
+                           className="text-center bg-red-500 text-white font-bold px-6 py-2 rounded-lg transition-all duration-200 hover:bg-red-600 shadow-md transform hover:scale-105"
                            onClick={closeModalAddMachineType}
                         >
                            Fechar
@@ -466,7 +466,7 @@ function App() {
                      />
                      <div className="w-full flex align-center justify-center">
                         <button
-                           className="text-center bg-red-500 font-bold px-4 py-2 rounded-lg transition hover:bg-red-600"
+                           className="text-center bg-red-500 text-white font-bold px-6 py-2 rounded-lg transition-all duration-200 hover:bg-red-600 shadow-md transform hover:scale-105"
                            onClick={closeModalAddMachine}
                         >
                            Fechar

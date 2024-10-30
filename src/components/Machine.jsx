@@ -38,17 +38,19 @@ function Machine({
    return (
       <>
          <div className="flex flex-col w-full justify-center items-center gap-8">
-            <div className="flex items-center">
-               <input
-                  type="checkbox"
-                  checked={allSelected}
-                  onChange={handleSelectAll}
-                  className="mr-2"
-               />
-               <label className="font-semibold text-[0.94rem]">
-                  Selecionar Todos
-               </label>
-            </div>
+            {filteredMachines.length > 0 && (
+               <div className="flex items-center">
+                  <input
+                     type="checkbox"
+                     checked={allSelected}
+                     onChange={handleSelectAll}
+                     className="mr-2"
+                  />
+                  <label className="font-semibold text-[0.94rem]">
+                     Selecionar Todos
+                  </label>
+               </div>
+            )}
             <div className="flex gap-8 flex-wrap items-center justify-center">
                {filteredMachines.map((machine) => (
                   <div
