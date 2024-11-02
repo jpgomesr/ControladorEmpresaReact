@@ -547,11 +547,11 @@ function App() {
             />
          </div>
 
-         <footer className="flex flex-row w-full py-6 justify-center items-center">
+         <div className="flex flex-row w-full py-6 justify-center items-center">
             <div className="flex flex-col w-[50%] py-3 px-1">
                <Alerts alert={alert} machines={machines} funcionario={idFunc} />
             </div>
-         </footer>
+         </div>
       </>
    );
 }
